@@ -1,0 +1,36 @@
+{
+  "name": "coulisseo",
+  "version": "2.0.0",
+  "type": "module",
+  "homepage": "https://mysteropodes.github.io/SImulateurIntermittece/",
+  "description": "Coulisseo : tableau de bord premium pour le suivi de statut d'intermittent du spectacle — anticipation du réexamen, module fiscal, dossier imprimable.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && cp dist/index.html dist/404.html",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist --repo https://github.com/mysteropodes/SImulateurIntermittece.git"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
+    "exceljs": "^4.4.0",
+    "lucide-react": "^0.294.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@types/exceljs": "^0.5.3",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.16",
+    "gh-pages": "^6.1.1",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vitest": "^1.6.1"
+  }
+}
