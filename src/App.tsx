@@ -142,8 +142,12 @@ function Shell() {
           <footer className="mt-12 border-t border-line-soft pt-4 text-xs text-ink-faint">
             Règles du guide « Intermittents du spectacle » de France Travail. Montants indicatifs : seule votre notification fait foi. Mise à jour le{' '}
             {formatDateFR(__DATE_MAJ__)}. Code source :{' '}
+            <a href="https://github.com/MX10-AC2N/Coulisseo" target="_blank" rel="noreferrer" className="font-semibold text-brand-300 underline underline-offset-2">
+              Coulisseo sur GitHub
+            </a>{' '}
+            — projet inspiré de{' '}
             <a href="https://github.com/mysteropodes/SImulateurIntermittece" target="_blank" rel="noreferrer" className="font-semibold text-brand-300 underline underline-offset-2">
-              GitHub
+              SImulateurIntermittece
             </a>
           </footer>
         </div>
@@ -153,7 +157,7 @@ function Shell() {
 }
 
 function App() {
-  // BASE_URL vaut '/' , '/SImulateurIntermittece/' ou './' (build à la racine d'un domaine).
+  // BASE_URL vaut '/' , '/Coulisseo/' ou './' (build à la racine d'un domaine).
   // Le routeur exige un chemin absolu : un chemin relatif se résout sur la racine du site.
   const raw = import.meta.env.BASE_URL;
   const basename = raw === './' || raw === '' || raw === '.' ? '/' : raw.replace(/\/$/, '') || '/';
