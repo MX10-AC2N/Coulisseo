@@ -32,11 +32,11 @@ const cheminBaseHtml = (base: string) => ({
 });
 
 export default defineConfig({
-  plugins: [react(), versionServiceWorker(), cheminBaseHtml(process.env.BASE_PATH ?? '/SImulateurIntermittece/')],
+  plugins: [react(), versionServiceWorker(), cheminBaseHtml(process.env.BASE_PATH ?? '/Coulisseo/')],
   // date de mise à jour affichée dans l'application (date du build)
   define: { __DATE_MAJ__: JSON.stringify(new Date().toISOString().slice(0, 10)) },
-  // chemin de base : '/SImulateurIntermittece/' pour GitHub Pages, './' pour une racine de domaine
-  base: process.env.BASE_PATH ?? '/SImulateurIntermittece/',
+  // chemin de base : '/Coulisseo/' pour GitHub Pages, './' pour une racine de domaine
+  base: process.env.BASE_PATH ?? '/Coulisseo/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

@@ -2,7 +2,7 @@
   "name": "coulisseo",
   "version": "2.0.0",
   "type": "module",
-  "homepage": "https://mysteropodes.github.io/SImulateurIntermittece/",
+  "homepage": "https://mx10-ac2n.github.io/Coulisseo/",
   "description": "Coulisseo : tableau de bord premium pour le suivi de statut d'intermittent du spectacle — anticipation du réexamen, module fiscal, dossier imprimable.",
   "scripts": {
     "dev": "vite",
@@ -32,5 +32,15 @@
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vitest": "^1.6.1"
-  }
+  },
+  "license": "MIT",
+  "author": "Coulisseo — MX10-AC2N",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MX10-AC2N/Coulisseo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MX10-AC2N/Coulisseo/issues"
+  },
+  "deploy": "gh-pages -d dist --repo https://github.com/MX10-AC2N/Coulisseo.git"
 }
