@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+    font-feature-settings: 'tnum' 1, 'ss01' 1, 'cv05' 1;
+    /* halo ambiant : deux nappes de lumière très diffuses sur le fond profond */
+    background-image:
+      radial-gradient(1100px 620px at 8% -12%, rgb(42 125 114 / 0.32), transparent 62%),
+      radial-gradient(900px 520px at 92% -6%, rgb(163 204 79 / 0.14), transparent 58%),
+      radial-gradient(800px 800px at 50% 110%, rgb(28 74 70 / 0.22), transparent 65%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+  }
+
+  /* sélection à la couleur de marque */
+  ::selection {
+    background: rgb(163 204 79 / 0.28);
+    color: #ffffff;
+  }
+
+  /* barre de défilement discrète et cohérente */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.14) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0.12);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgb(255 255 255 / 0.22);
+    background-clip: content-box;
+  }
+
+  /* anneau de focus visible et cohérent */
+  :focus-visible {
+    outline: 2px solid rgb(191 225 118 / 0.75);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .input {
+    @apply w-full rounded-2xl border border-line-strong bg-surface-inset px-3.5 py-2.5 text-sm text-ink transition
+      placeholder:text-ink-dim focus:border-lime-500/60 focus:bg-surface-muted focus:outline-none focus:ring-4 focus:ring-lime-500/15;
+  }
+  .input-sm {
+    @apply w-full rounded-xl border border-transparent bg-surface-muted px-2.5 py-1.5 text-sm text-ink transition
+      hover:border-line-strong focus:border-lime-500/60 focus:bg-surface-muted focus:outline-none focus:ring-4 focus:ring-lime-500/15;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition
+      focus:outline-none focus-visible:ring-4 focus-visible:ring-lime-500/20 disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-500 active:bg-brand-700;
+  }
+  .btn-lime {
+    @apply btn bg-lime-400 text-brand-950 hover:bg-lime-300 active:bg-lime-500;
+  }
+  .btn-ghost {
+    @apply btn text-ink-muted hover:bg-surface-strong hover:text-ink;
+  }
+  .btn-outline {
+    @apply btn border border-line-strong bg-surface-soft text-ink-muted hover:border-line-strong hover:bg-surface-strong hover:text-ink;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-faint;
+  }
+
+  /* carte en verre : le filet supérieur simule la lumière sur une arête */
+  .glass {
+    @apply relative rounded-4xl border border-line-soft bg-surface-soft backdrop-blur-xl shadow-card;
+  }
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.22), transparent);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* tableau dense lisible sur fond sombre */
+  .tbl {
+    @apply w-full text-sm;
+  }
+  .tbl th {
+    @apply whitespace-nowrap px-3 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider text-ink-faint;
+  }
+  .tbl td {
+    @apply border-t border-line-soft px-3 py-2.5 align-middle;
+  }
+  .tbl tbody tr {
+    @apply transition-colors;
+  }
+  .tbl tbody tr:hover {
+    @apply bg-surface-muted;
+  }
+}
+
+@layer utilities {
+  .text-gradient-lime {
+    background-image: linear-gradient(180deg, #ffffff, rgb(210 236 156 / 0.92));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-brand {
+    background-image: linear-gradient(180deg, #ffffff, rgb(127 199 186 / 0.9));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* trame très fine : donne du grain aux aplats, sans image externe */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Impression : le dossier doit sortir sur papier, en noir et blanc  */
+/* ------------------------------------------------------------------ */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #0c3834 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-plain {
+    background: #ffffff !important;
+    color: #0c3834 !important;
+    border-color: #cbd5d1 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .print-plain * {
+    color: #0c3834 !important;
+    border-color: #cbd5d1 !important;
+  }
+}
