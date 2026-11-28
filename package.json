@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist --repo https://github.com/mysteropodes/SImulateurIntermittece.git"
+    "deploy": "gh-pages -d dist --repo https://github.com/MX10-AC2N/Coulisseo.git",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.3.0",
@@ -41,6 +43,5 @@
   },
   "bugs": {
     "url": "https://github.com/MX10-AC2N/Coulisseo/issues"
-  },
-  "deploy": "gh-pages -d dist --repo https://github.com/MX10-AC2N/Coulisseo.git"
+  }
 }

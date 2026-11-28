@@ -2,6 +2,18 @@
   <img src="public/logo-light.svg" alt="Coulisseo" height="64" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/MX10-AC2N/Coulisseo/actions/workflows/ci.yml">
+    <img alt="CI — tests, typage et build" src="https://github.com/MX10-AC2N/Coulisseo/actions/workflows/ci.yml/badge.svg" />
+  </a>
+  <a href="https://github.com/MX10-AC2N/Coulisseo/actions/workflows/deploy-pages.yml">
+    <img alt="Déploiement — GitHub Pages" src="https://github.com/MX10-AC2N/Coulisseo/actions/workflows/deploy-pages.yml/badge.svg" />
+  </a>
+  <a href="https://mx10-ac2n.github.io/Coulisseo/">
+    <img alt="Démo en ligne" src="https://img.shields.io/badge/d%C3%A9mo-en%20ligne-d2ec9c?style=flat-square&labelColor=0c3834&color=0a1211" />
+  </a>
+</p>
+
 # Coulisseo — pilotage de l'intermittence
 
 **Coulisseo** (de *coulisses*) : le tableau de bord de l'intermittent du spectacle. Suivi du statut,
