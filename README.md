@@ -19,8 +19,7 @@
 **Coulisseo** (de *coulisses*) : le tableau de bord de l'intermittent du spectacle. Suivi du statut,
 anticipation du réexamen, module fiscal complet et dossier imprimable, en annexes 8 et 10.
 
-Démo : **https://mx10-ac2n.github.io/Coulisseo/** (GitHub Pages) — démo temporaire :
-**https://rojabumzv8awc.space.mcode.io** — dépôt : **https://github.com/MX10-AC2N/Coulisseo**
+Démo : **https://mx10-ac2n.github.io/Coulisseo/** (GitHub Pages) — dépôt : **https://github.com/MX10-AC2N/Coulisseo**
 
 > Ce projet s'inspire de **[SImulateurIntermittece](https://github.com/mysteropodes/SImulateurIntermittece)**
 > de [mysteropodes](https://github.com/mysteropodes), publié en **CC0 1.0** (domaine public). Nous
