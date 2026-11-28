@@ -1,4 +1,9 @@
 # Suivi des mises à jour des dépendances npm et des actions GitHub.
+#
+# Les mises à jour majeures des outils de build sont volontairement ignorées :
+# Tailwind 4, TypeScript 7, Vite 8 et Vitest 5 demandent une migration du code
+# (format de configuration CSS-first, compilateur natif, nouvelle API de test).
+# Ces migrations se font dans une branche dédiée, pas dans une PR automatique.
 version: 2
 updates:
   - package-ecosystem: npm
@@ -6,13 +11,31 @@ updates:
     schedule:
       interval: monthly
     open-pull-requests-limit: 5
+    versioning-strategy: increase
+    labels:
+      - dependabot
+    ignore:
+      - dependency-name: 'tailwindcss'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'vite'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'vitest'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@vitejs/plugin-react'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react-dom'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'exceljs'
+        update-types: ['version-update:semver-major']
     groups:
       production:
         dependency-type: production
       developpement:
         dependency-type: development
-    labels:
-      - dependabot
 
   - package-ecosystem: github-actions
     directory: '/'
@@ -21,3 +44,7 @@ updates:
     open-pull-requests-limit: 3
     labels:
       - dependabot
+    groups:
+      actions:
+        patterns:
+          - '*'
