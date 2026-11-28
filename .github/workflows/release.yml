@@ -1,0 +1,65 @@
+# Publication d'une version : le tag vX.Y.Z déclenche une GitHub Release
+# avec le site construit en archive téléchargeable.
+#
+#   git tag v2.1.0 && git push origin v2.1.0
+name: Publication — version
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version à publier (ex. v2.1.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publier
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Construire le site
+        run: npm run build
+        env:
+          BASE_PATH: './'
+
+      - name: Préparer l'archive du site
+        run: |
+          cd dist
+          zip -qr ../coulisseo-site.zip .
+          cd ..
+          echo "Archive : $(du -h coulisseo-site.zip | cut -f1)"
+
+      - name: Créer la version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.inputs.version || github.ref_name }}
+        run: |
+          git tag -f "$TAG" -m "Version $TAG"
+          git push -f origin "$TAG"
+          gh release create "$TAG" \
+            --title "Coulisseo $TAG" \
+            --generate-notes \
+            coulisseo-site.zip
+
+      - name: Joindre l'artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coulisseo-site
+          path: coulisseo-site.zip
+          retention-days: 30

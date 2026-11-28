@@ -1,0 +1,62 @@
+# Contrôle continu : typage, tests et build sur chaque push et chaque pull request.
+name: CI — tests, typage et build
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  controle:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['20', '22']
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Vérifier le typage (TypeScript strict)
+        run: npm run typecheck
+
+      - name: Lancer les tests (règles de calcul, fiscalité, réexamen)
+        run: npm test
+
+      - name: Construire le site
+        run: npm run build
+        env:
+          # chemin relatif : le build est testable depuis n'importe quel dossier
+          BASE_PATH: './'
+
+      - name: Vérifier que le build est complet
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/manifest.webmanifest
+          test -f dist/icon-512.png
+          test -f dist/logo.svg
+          echo "Artefacts présents : $(ls dist | wc -l) entrées"
+
+      - name: Publier le build comme artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-node-${{ matrix.node }}
+          path: dist
+          retention-days: 7
+          if-no-files-found: error

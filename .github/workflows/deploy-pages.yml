@@ -1,0 +1,79 @@
+# Déploiement du site sur GitHub Pages (https://mx10-ac2n.github.io/Coulisseo/).
+# À faire une fois dans Settings > Pages > Source : « GitHub Actions ».
+name: Déploiement — GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Construire
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Construire le site
+        run: npm run build
+        env:
+          # chemin de base du site publié : /Coulisseo/
+          BASE_PATH: '/Coulisseo/'
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Publier l'artefact Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Déployer
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  verifier:
+    name: Vérifier le site en ligne
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Contrôler la réponse du site publié
+        run: |
+          URL="${{ needs.deploy.outputs.page_url }}"
+          echo "Contrôle de $URL"
+          code=$(curl -s -o /tmp/coulisseo.html -w '%{http_code}' "$URL")
+          if [ "$code" != "200" ]; then
+            echo "Le site publié répond $code"
+            exit 1
+          fi
+          grep -q "Coulisseo" /tmp/coulisseo.html || { echo "Titre Coulisseo absent"; exit 1; }
+          echo "Site publié OK ($code)"
